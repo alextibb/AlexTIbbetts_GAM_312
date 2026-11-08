@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
+#include "Resource_M.h"
 #include "PlayerChar.generated.h"
 
 UCLASS()
@@ -29,44 +30,61 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFUNCTION()
-	void MoveForward(float axisValue);
+		void MoveForward(float axisValue);
 
 	UFUNCTION()
-	void MoveRight(float axisValue);
+		void MoveRight(float axisValue);
 
 	UFUNCTION()
-	void StartJump();
+		void StartJump();
 
 	UFUNCTION()
-	void StopJump();
+		void StopJump();
 
 	UFUNCTION()
-	void FindObject();
+		void FindObject();
 
 	UPROPERTY(VisibleAnywhere)
-	UCameraComponent* PlayerCamComp;
+		UCameraComponent* PlayerCamComp;
 	
 	// health hunger and stamina varibles 
 	
 	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "player stats")
-	float Health = 100.0f;
+		float Health = 100.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "player stats")
-	float Hunger = 100.0f;
+		float Hunger = 100.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "player stats")
-	float Stamina = 100.0f;
+		float Stamina = 100.0f;
+
+	UPROPERTY(EditAnywhere, Category = "Resources")
+		int Wood;
+
+	UPROPERTY(EditAnywhere, Category = "Resources")
+		int Stone;
+
+	UPROPERTY(EditAnywhere, Category = "Resources")
+		int Berry;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resources")
+		TArray<int> ResourcesArray;
+
+	UPROPERTY(EditAnywhere, Category = "Resources")
+		TArray<FString> ResourcesNameArray;
+	
+	UFUNCTION(Blueprintcallable)
+		void SetHealth(float amount);
 
 	UFUNCTION(Blueprintcallable)
-	void SetHealth(float amount);
-
-	UFUNCTION(Blueprintcallable)
-	void SetHunger(float amount);
+		void SetHunger(float amount);
 
 	UFUNCTION(BlueprintCallable)
-	void SetStamina(float amount);
+		void SetStamina(float amount);
 	
 	UFUNCTION()
-	void DecreaseStats();
+		void DecreaseStats();
 
+	UFUNCTION()
+		void GiveResource(float amount, FString resourceType);
 };
