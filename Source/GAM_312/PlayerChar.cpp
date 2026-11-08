@@ -96,29 +96,34 @@ void APlayerChar::FindObject()
 	{
 		AResource_M* HitResource = Cast<AResource_M>(HitResult.GetActor());
 
-		if (HitResource)
+		if (Stamina > 5.0f)
 		{
-			FString hitName = HitResource->resourceName;
-			int resourcevalue = HitResource->ResourceAmount;
-
-			//resource ammount being lowered for grabbing resources
-			HitResource->totalResource = HitResource->totalResource - resourcevalue;
-
-			if (HitResource->totalResource > resourcevalue)
+			if (HitResource)
 			{
-				GiveResource(resourcevalue, hitName);
+				FString hitName = HitResource->resourceName;
+				int resourcevalue = HitResource->ResourceAmount;
 
-				//print string to check if hitting
-				check(GEngine != nullptr);
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Collected"));
-			}
-			
-			//when resource is empty
-			else
-			{
-				HitResource->Destroy();
-				check(GEngine != nullptr);
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Depleted"));
+				//resource ammount being lowered for grabbing resources
+				HitResource->totalResource = HitResource->totalResource - resourcevalue;
+
+				if (HitResource->totalResource > resourcevalue)
+				{
+					GiveResource(resourcevalue, hitName);
+
+					//print string to check if hitting
+					check(GEngine != nullptr);
+					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Collected"));
+
+					UGameplayStatics::SpawnDecalAtLocation(GetWorld(), hitDecal, FVector(10.0f, 10.0f, 10.0f), HitResult.Location, FRotator(-90, 0, 0), 2.0f);
+
+					SetStamina(-5.0f);
+				}
+				else  //when resource is empty
+				{
+					HitResource->Destroy();
+					check(GEngine != nullptr);
+					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Depleted"));
+				}
 			}
 		}
 	}
