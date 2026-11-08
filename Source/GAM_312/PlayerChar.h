@@ -45,5 +45,28 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* PlayerCamComp;
+	
+	// health hunger and stamina varibles 
+	
+	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "player stats")
+	float Health = 100.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "player stats")
+	float Hunger = 100.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "player stats")
+	float Stamina = 100.0f;
+
+	UFUNCTION(Blueprintcallable)
+	void SetHealth(float amount);
+
+	UFUNCTION(Blueprintcallable)
+	void SetHunger(float amount);
+
+	UFUNCTION(BlueprintCallable)
+	void SetStamina(float amount);
+	
+	UFUNCTION()
+	void DecreaseStats();
 
 };
