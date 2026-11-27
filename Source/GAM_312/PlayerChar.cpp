@@ -33,6 +33,12 @@ void APlayerChar::BeginPlay()
 	// Every 2 secs triggers stat decrease 
 	FTimerHandle StatsTimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(StatsTimerHandle, this, &APlayerChar::DecreaseStats, 2.0f, true);
+
+	if (objWidget)
+	{
+		objWidget->UpdatebuildObj(0.0f);
+		objWidget->UpdatematOBJ(0.0f);
+	}
 	
 }
 
@@ -127,6 +133,10 @@ void APlayerChar::FindObject()
 					{
 						GiveResource(resourcevalue, hitName);
 
+						matsCollected = matsCollected + resourcevalue;
+
+						objWidget->UpdatematOBJ(matsCollected);
+
 						//print string to check if hitting
 						check(GEngine != nullptr);
 						GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Collected"));
@@ -150,6 +160,9 @@ void APlayerChar::FindObject()
 	else
 	{
 		isBuilding = false;
+		objectsBuilt = objectsBuilt + 1.0f;
+
+		objWidget->UpdatebuildObj(objectsBuilt);
 
 	}
 

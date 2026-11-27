@@ -9,6 +9,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "BuildingPart.h"
 #include "PlayerWidget.h"
+#include "ObjectiveWidget.h"
 #include "PlayerChar.generated.h"
 
 UCLASS()
@@ -52,13 +53,13 @@ public:
 	
 	// health hunger and stamina varibles 
 	
-	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "player stats")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "player stats")
 		float Health = 100.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "player stats")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "player stats")
 		float Hunger = 100.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "player stats")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "player stats")
 		float Stamina = 100.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Resources")
@@ -89,15 +90,24 @@ public:
 		TSubclassOf<ABuildingPart> BuildPartClass;
 
 	UPROPERTY()
-	ABuildingPart* spawnedPart;
+		ABuildingPart* spawnedPart;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UPlayerWidget* playerUI;
 
-	UFUNCTION(Blueprintcallable)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UObjectiveWidget* objWidget;
+
+	UPROPERTY()
+	float objectsBuilt;
+
+	UPROPERTY()
+	float matsCollected;
+
+	UFUNCTION(BlueprintCallable)
 		void SetHealth(float amount);
 
-	UFUNCTION(Blueprintcallable)
+	UFUNCTION(BlueprintCallable)
 		void SetHunger(float amount);
 
 	UFUNCTION(BlueprintCallable)
